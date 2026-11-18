@@ -8,6 +8,7 @@ import {
   topicOf,
   topicSlug,
 } from '../../lib/notes';
+import { withBase } from '../../lib/paths';
 
 export async function getStaticPaths() {
   const notes = await allNotes();
@@ -25,7 +26,7 @@ const list = notes.filter((note) => topicOf(note) === topic);
 <Base title={topic} description={`${topic} 相关笔记。`}>
   <main class="page-shell" id="content">
     <header class="page-intro">
-      <p class="kicker"><a href="/topics/">Topics</a> / {list.length} notes</p>
+      <p class="kicker"><a href={withBase('/topics/')}>Topics</a> / {list.length} notes</p>
       <h1>{topic}</h1>
     </header>
     <div class="stack">

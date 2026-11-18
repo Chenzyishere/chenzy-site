@@ -342,6 +342,69 @@ html.menu-open .menu-toggle {
   color: var(--muted);
 }
 
+.about-body {
+  padding-top: 32px;
+  padding-bottom: 64px;
+}
+
+.about-portrait {
+  margin: 0 0 28px;
+  max-width: 280px;
+  border: 3px solid var(--ink);
+  background: #fff;
+}
+
+.about-portrait img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.taste-list {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+}
+
+.taste-list li {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  column-gap: 16px;
+  padding: 18px 0;
+  border-top: 2px solid var(--ink);
+}
+
+.taste-no {
+  font-family: var(--font-poster);
+  font-size: 22px;
+}
+
+.taste-list h3 {
+  margin: 0;
+  font-size: clamp(20px, 3vw, 28px);
+  line-height: 1.2;
+}
+
+.taste-list h3 a {
+  text-decoration: none;
+}
+
+.taste-list h3 a:hover {
+  text-decoration: underline;
+}
+
+.taste-meta,
+.taste-list p {
+  margin: 6px 0 0;
+  color: var(--muted);
+}
+
+.taste-meta {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
 html.has-cursor,
 html.has-cursor body,
 html.has-cursor a,

@@ -6,9 +6,53 @@
 .hero {
   min-height: calc(100vh - var(--header));
   display: grid;
-  align-content: end;
+  gap: 32px;
   padding: 40px var(--gutter) 48px;
   border-bottom: 3px solid var(--ink);
+}
+
+.hero-copy {
+  display: grid;
+  align-content: end;
+}
+
+.hero-portrait {
+  margin: 0;
+  max-width: 420px;
+  width: min(100%, 420px);
+  border: 3px solid var(--ink);
+  background: #fff;
+}
+
+.hero-portrait img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.hero-portrait figcaption {
+  margin: 0;
+  padding: 10px 14px 12px;
+  border-top: 2px solid var(--ink);
+  font-family: var(--font-poster);
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+@media (min-width: 900px) {
+  .hero {
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.8fr);
+    align-items: end;
+    column-gap: 48px;
+  }
+
+  .hero-portrait {
+    justify-self: end;
+    max-width: 520px;
+    width: 100%;
+  }
 }
 
 .hero-kicker {

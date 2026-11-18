@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { allNotes, topicOf, topicSlug } from '../../lib/notes';
+import { allNotes, topicOf, topicPath } from '../../lib/notes';
 
 const notes = await allNotes();
 const topics = [...new Set(notes.map(topicOf))];
@@ -17,7 +17,7 @@ const topics = [...new Set(notes.map(topicOf))];
       {topics.map((topic) => {
         const count = notes.filter((note) => topicOf(note) === topic).length;
         return (
-          <a class="topic-card" href={`/topics/${topicSlug(topic)}/`}>
+          <a class="topic-card" href={topicPath(topic)}>
             <span class="kicker">{count} notes</span>
             <h2>{topic}</h2>
           </a>

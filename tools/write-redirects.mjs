@@ -5,6 +5,13 @@ import { fileURLToPath } from 'node:url';
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const notesDir = path.join(root, 'src/content/notes');
 const distDir = path.join(root, 'dist');
+const configText = await readFile(path.join(root, 'astro.config.mjs'), 'utf8');
+const baseMatch = configText.match(/\bbase:\s*['"]([^'"]*)['"]/);
+const prefix = (baseMatch?.[1] ?? '/').replace(/\/$/, '');
+
+function dest(to) {
+  return `${prefix}${to}`;
+}
 
 function html(to) {
   const href = encodeURI(to);
@@ -31,10 +38,10 @@ for (const name of files) {
   if (!match) continue;
   const [, year, month, day] = match;
   const slug = name.replace(/\.md$/, '');
-  const dest = `/notes/${slug.toLowerCase().replace(/[（）()&]/g, '')}/`;
+  const to = dest(`/notes/${slug.toLowerCase().replace(/[（）()&]/g, '')}/`);
   const dir = path.join(distDir, year, month, day, slug);
   await mkdir(dir, { recursive: true });
-  await writeFile(path.join(dir, 'index.html'), html(dest), 'utf8');
+  await writeFile(path.join(dir, 'index.html'), html(to), 'utf8');
 }
 
 const aliases = {
@@ -51,7 +58,7 @@ const aliases = {
 for (const [from, to] of Object.entries(aliases)) {
   const file = path.join(distDir, from);
   await mkdir(path.dirname(file), { recursive: true });
-  await writeFile(file, html(to), 'utf8');
+  await writeFile(file, html(dest(to)), 'utf8');
 }
 
 console.log(`wrote ${files.length} hexo redirects`);

@@ -4,7 +4,9 @@ import remarkGfm from 'remark-gfm';
 import rehypeSlug from 'rehype-slug';
 
 export default defineConfig({
-  site: 'https://blog.chenzymark.space',
+  site: 'https://chenzyishere.github.io',
+  base: '/chenzy-site',
+  trailingSlash: 'always',
   integrations: [react()],
   markdown: {
     remarkPlugins: [remarkGfm],

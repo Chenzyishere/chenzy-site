@@ -1,15 +1,16 @@
 ---
 import { site } from '../data/site';
+import { withBase } from '../lib/paths';
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
   <p>© {year} {site.name}</p>
   <p>
-    <a href="/about">About</a>
+    <a href={withBase('/about/')}>About</a>
     ·
     <a href={site.github} rel="noreferrer">GitHub</a>
     ·
-    <a href="/search">Search</a>
+    <a href={withBase('/search/')}>Search</a>
   </p>
 </footer>

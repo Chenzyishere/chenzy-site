@@ -1,4 +1,5 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { withBase } from './paths';
 
 export type Note = CollectionEntry<'notes'>;
 
@@ -63,7 +64,11 @@ export async function allNotes(): Promise<Note[]> {
 }
 
 export function notePath(note: Note): string {
-  return `/notes/${publicSlug(note.id)}/`;
+  return withBase(`/notes/${publicSlug(note.id)}/`);
+}
+
+export function topicPath(name: string): string {
+  return withBase(`/topics/${topicSlug(name)}/`);
 }
 
 export function oldHexoPath(note: Note): {

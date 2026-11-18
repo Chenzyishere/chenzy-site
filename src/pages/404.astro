@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import { withBase } from '../lib/paths';
 import '../styles/home.css';
 ---
 
@@ -9,7 +10,7 @@ import '../styles/home.css';
       <p class="hero-kicker">Missing</p>
       <h1>这一页不在了。</h1>
       <p class="hero-lead">
-        回 <a href="/">首页</a>，或去 <a href="/notes/">笔记</a> 里找。
+        回 <a href={withBase('/')}>首页</a>，或去 <a href={withBase('/notes/')}>笔记</a> 里找。
       </p>
     </section>
   </main>

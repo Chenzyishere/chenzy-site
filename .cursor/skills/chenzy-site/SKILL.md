@@ -45,8 +45,9 @@ Astro 5 静态输出 + 少量 React 岛（`Menu`、`WorkCarousel`）。Markdown 
 ```text
 src/content/notes/       文章（从 Hexo 迁入）
 src/content/projects/    三个项目
-src/data/site.ts         站名、主张、社交
+src/data/site.ts         站名、主张、社交、人像路径
 src/data/now.ts          在学 / 在做
+src/data/lists.ts        音乐 / 电影 / 友链
 src/pages/index.astro    首页长页
 src/pages/notes/         笔记列表 + [slug]
 src/pages/work/          项目
@@ -82,15 +83,19 @@ Node 22。依赖安装优先 `https://registry.npmmirror.com`。
 ## 部署现状
 
 - GitHub：https://github.com/Chenzyishere/chenzy-site
-- Workflow：`.github/workflows/deploy.yml` → GitHub Pages
-- **Pages 还没在仓库设置里打开**。打开后预览是 `https://chenzyishere.github.io/chenzy-site/`
-- 自定义域 `blog.chenzymark.space` **还没切**。切之前不要写 `public/CNAME`，也不要停 Hexo 部署
-- 预览若走 github.io 子路径，需要给 `astro.config.mjs` 加 `base: '/chenzy-site'`；绑自定义域时 `base` 必须是 `/`
+- Workflow：`.github/workflows/deploy.yml` → GitHub Pages（仓库 Settings 里已经是 GitHub Actions）
+- 预览：`https://chenzyishere.github.io/chenzy-site/`
+- `astro.config.mjs` 现在是 `site: 'https://chenzyishere.github.io'`、`base: '/chenzy-site'`。站内链接走 `withBase()`（`src/lib/paths.ts`）
+- 自定义域 `blog.chenzymark.space` **还没切**。切之前不要写 `public/CNAME`，也不要停 Hexo 部署。切的时候把 `base` 改成 `/`，`site` 改成自定义域
+- 锁文件里不要再留 `lenis`，`npm ci` 会报 Invalid Version
+
+首页 hero 右侧是拍立得人像（旧站头像），黑框海报卡。关于页左上角同一张。图在 `public/images/portrait.jpg`，路径写在 `site.portrait`。
+
+清单数据在 `src/data/lists.ts`。音乐/电影是第一版回看清单，用户说换就改这份数据，不要把歌名写死在页面里。
 
 ## 未做完（用户没点名就不要自己做）
 
-1. GitHub Pages 开关与第一次 Actions 部署
-2. 域名从 Hexo 切过来
+1. 域名从 Hexo 切过来
 3. documents 仓库的 `repository_dispatch` 改打到本仓库
-4. 关于/音乐/电影/友链仍是占位文案
-5. 精选四篇的 `description` 有的还是标题复读，可以改成一句判断
+4. 精选四篇的 `description` 有的还是标题复读，可以改成一句判断
+5. 音乐/电影清单若与本人口味不符，按 `src/data/lists.ts` 替换

@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { films, links, music } from '../../data/lists';
 ---
 
 <Base title="Lists" description="音乐、电影与友链。">
@@ -7,20 +8,57 @@ import Base from '../../layouts/Base.astro';
     <header class="page-intro">
       <p class="kicker">Music / Film / Links</p>
       <h1>Lists</h1>
-      <p>先把入口放在同一页。清单本身还在填。</p>
+      <p>常回去的。歌单会换，电影会再看，站点是写笔记时会打开的。</p>
     </header>
     <div class="stack">
       <section class="list-block">
         <h2>音乐</h2>
-        <p class="note-desc">这里会放我常听的音乐清单。</p>
+        <p class="note-desc">不按热度排。留下的是还想再听一遍的。</p>
+        <ol class="taste-list">
+          {music.map((item, index) => (
+            <li>
+              <span class="taste-no">{String(index + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>{item.title}</h3>
+                <p class="taste-meta">{item.meta}</p>
+                <p>{item.note}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </section>
       <section class="list-block">
         <h2>电影</h2>
-        <p class="note-desc">这里会放我看过或推荐的电影。</p>
+        <p class="note-desc">会再看一遍的。每部只留一句判断。</p>
+        <ol class="taste-list">
+          {films.map((item, index) => (
+            <li>
+              <span class="taste-no">{String(index + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>{item.title}</h3>
+                <p class="taste-meta">{item.meta}</p>
+                <p>{item.note}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </section>
       <section class="list-block">
         <h2>友链</h2>
-        <p class="note-desc">友链与推荐站点。有想交换的，走 GitHub 提 issue。</p>
+        <p class="note-desc">值得放进来的站点。想交换的，走 GitHub 提 issue。</p>
+        <ol class="taste-list">
+          {links.map((item, index) => (
+            <li>
+              <span class="taste-no">{String(index + 1).padStart(2, '0')}</span>
+              <div>
+                <h3>
+                  <a href={item.href} rel="noreferrer">{item.title}</a>
+                </h3>
+                <p>{item.note}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </section>
     </div>
   </main>

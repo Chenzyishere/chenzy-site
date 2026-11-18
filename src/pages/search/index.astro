@@ -1,5 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
+
+const pagefind = `${import.meta.env.BASE_URL}pagefind/`;
 ---
 
 <Base title="Search" description="搜索笔记。">
@@ -15,12 +17,16 @@ import Base from '../../layouts/Base.astro';
   </main>
 </Base>
 
-<link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
-<script is:inline src="/pagefind/pagefind-ui.js"></script>
-<script is:inline>
+<link href={`${pagefind}pagefind-ui.css`} rel="stylesheet" />
+<script is:inline src={`${pagefind}pagefind-ui.js`}></script>
+<script is:inline define:vars={{ pagefind }}>
   window.addEventListener('DOMContentLoaded', () => {
     const mount = document.querySelector('#search');
     if (!mount || typeof window.PagefindUI === 'undefined') return;
-    new window.PagefindUI({ element: '#search', showSubResults: true });
+    new window.PagefindUI({
+      element: '#search',
+      bundlePath: pagefind,
+      showSubResults: true,
+    });
   });
 </script>

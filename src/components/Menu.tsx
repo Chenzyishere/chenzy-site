@@ -1,5 +1,6 @@
 import { useEffect, useId, useState } from 'react';
 import { nav } from '../data/site';
+import { withBase } from '../lib/paths';
 
 export default function Menu() {
   const [open, setOpen] = useState(false);
@@ -40,7 +41,7 @@ export default function Menu() {
         <ul className="menu-list">
           {nav.map((item) => (
             <li key={item.href}>
-              <a className="menu-link" href={item.href} onClick={() => setOpen(false)}>
+              <a className="menu-link" href={withBase(item.href)} onClick={() => setOpen(false)}>
                 <span className="menu-no">{item.no}</span>
                 {item.label}
               </a>

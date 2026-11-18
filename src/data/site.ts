@@ -10,13 +10,14 @@ export const site = {
   description: 'Chenzy 的个人站点。前端笔记、项目与正在做的事。',
   github: 'https://github.com/Chenzyishere',
   email: '',
+  portrait: '/images/portrait.jpg',
 } as const;
 
 export const nav = [
   { href: '/', label: 'Home', no: '01' },
-  { href: '/notes', label: 'Notes', no: '02' },
-  { href: '/work', label: 'Work', no: '03' },
-  { href: '/topics', label: 'Topics', no: '04' },
-  { href: '/about', label: 'About', no: '05' },
-  { href: '/list', label: 'Lists', no: '06' },
+  { href: '/notes/', label: 'Notes', no: '02' },
+  { href: '/work/', label: 'Work', no: '03' },
+  { href: '/topics/', label: 'Topics', no: '04' },
+  { href: '/about/', label: 'About', no: '05' },
+  { href: '/list/', label: 'Lists', no: '06' },
 ] as const;

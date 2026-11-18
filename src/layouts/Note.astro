@@ -1,7 +1,7 @@
 ---
 import { render, type CollectionEntry } from 'astro:content';
 import Base from './Base.astro';
-import { formatFullDate, notePath, readingMinutes, topicOf, topicSlug } from '../lib/notes';
+import { formatFullDate, notePath, readingMinutes, topicOf, topicPath } from '../lib/notes';
 import '../styles/note.css';
 
 type Props = {
@@ -21,7 +21,7 @@ const toc = headings.filter((item) => item.depth === 2 || item.depth === 3);
   <main class="page-shell note-layout" id="content" data-pagefind-body>
     <header class="note-header">
       <p class="kicker">
-        <a href={`/topics/${topicSlug(topic)}/`}>{topic}</a>
+        <a href={topicPath(topic)}>{topic}</a>
         · {formatFullDate(note.data.date)}
         · {minutes} min
       </p>
