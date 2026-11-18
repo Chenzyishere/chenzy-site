@@ -1,0 +1,20 @@
+---
+import { allNotes, publicSlug } from '../../lib/notes';
+import NoteLayout from '../../layouts/Note.astro';
+
+export async function getStaticPaths() {
+  const notes = await allNotes();
+  return notes.map((note, index) => ({
+    params: { slug: publicSlug(note.id) },
+    props: {
+      note,
+      prev: notes[index + 1],
+      next: notes[index - 1],
+    },
+  }));
+}
+
+const { note, prev, next } = Astro.props;
+---
+
+<NoteLayout note={note} prev={prev} next={next} />

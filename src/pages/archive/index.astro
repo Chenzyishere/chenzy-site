@@ -1,0 +1,35 @@
+---
+import Base from '../../layouts/Base.astro';
+import { allNotes, formatFullDate, notePath, topicOf } from '../../lib/notes';
+
+const notes = await allNotes();
+const groups = new Map<string, typeof notes>();
+for (const note of notes) {
+  const year = String(note.data.date.getFullYear());
+  const list = groups.get(year) ?? [];
+  list.push(note);
+  groups.set(year, list);
+}
+const years = [...groups.keys()].sort((a, b) => Number(b) - Number(a));
+---
+
+<Base title="Archive" description="按时间归档的笔记。">
+  <main class="page-shell" id="content">
+    <header class="page-intro">
+      <p class="kicker">{notes.length} notes</p>
+      <h1>Archive</h1>
+      <p>按年份摊开。说对的、说错的，都留在原处。</p>
+    </header>
+    {years.map((year) => (
+      <section class="stack">
+        <h2 class="kicker" style="padding-top: 28px;">{year}</h2>
+        {(groups.get(year) ?? []).map((note) => (
+          <a class="note-row" href={notePath(note)}>
+            <span class="note-meta">{formatFullDate(note.data.date)} · {topicOf(note)}</span>
+            <h2 class="note-title">{note.data.title}</h2>
+          </a>
+        ))}
+      </section>
+    ))}
+  </main>
+</Base>

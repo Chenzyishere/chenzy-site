@@ -1,0 +1,35 @@
+:root {
+  --blue: #2f3bff;
+  --blue-deep: #1c24c2;
+  --ink: #0b0b0b;
+  --paper: #e8e2d4;
+  --paper-2: #f4efe4;
+  --muted: color-mix(in srgb, var(--ink) 58%, transparent);
+  --hair: color-mix(in srgb, var(--ink) 18%, transparent);
+  --font-poster: "Anton", "Noto Sans SC", sans-serif;
+  --font-display: "Alumni Sans", "Noto Sans SC", sans-serif;
+  --font-ui: "Noto Sans SC", system-ui, sans-serif;
+  --font-body: "Noto Serif SC", "Noto Sans SC", serif;
+  --header: 64px;
+  --gutter: 20px;
+  --max-read: 42rem;
+  --ease: cubic-bezier(0.77, 0, 0.18, 1);
+}
+
+@media (min-width: 900px) {
+  :root {
+    --header: 76px;
+    --gutter: 40px;
+  }
+}
+
+html[data-theme="paper"] {
+  --page-bg: var(--paper);
+  --page-fg: var(--ink);
+}
+
+html[data-theme="blue"] {
+  --page-bg: var(--blue);
+  --page-fg: var(--ink);
+  scrollbar-color: var(--ink) var(--blue);
+}

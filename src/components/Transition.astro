@@ -1,0 +1,22 @@
+<div class="transition-veil" data-veil aria-hidden="true"></div>
+<script>
+  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const veil = document.querySelector('[data-veil]');
+  if (veil instanceof HTMLElement && !motion.matches) {
+    document.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      const link = target.closest('a');
+      if (!(link instanceof HTMLAnchorElement)) return;
+      if (link.target === '_blank' || link.hasAttribute('download')) return;
+      const url = new URL(link.href, window.location.href);
+      if (url.origin !== window.location.origin) return;
+      if (url.pathname === window.location.pathname && url.hash) return;
+      event.preventDefault();
+      veil.classList.add('is-on');
+      window.setTimeout(() => {
+        window.location.href = url.href;
+      }, 380);
+    });
+  }
+</script>

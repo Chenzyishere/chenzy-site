@@ -1,0 +1,22 @@
+---
+import { allNotes, notePath, oldHexoPath } from '../../../../lib/notes';
+
+export async function getStaticPaths() {
+  const notes = await allNotes();
+  return notes.map((note) => {
+    const path = oldHexoPath(note);
+    return {
+      params: {
+        year: path.year,
+        month: path.month,
+        day: path.day,
+        slug: path.slug,
+      },
+      props: { href: notePath(note) },
+    };
+  });
+}
+
+const { href } = Astro.props;
+return Astro.redirect(encodeURI(href), 301);
+---

@@ -1,0 +1,70 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import Base from './Base.astro';
+import { formatFullDate, notePath, readingMinutes, topicOf, topicSlug } from '../lib/notes';
+import '../styles/note.css';
+
+type Props = {
+  note: CollectionEntry<'notes'>;
+  prev?: CollectionEntry<'notes'>;
+  next?: CollectionEntry<'notes'>;
+};
+
+const { note, prev, next } = Astro.props;
+const { Content, headings } = await render(note);
+const topic = topicOf(note);
+const minutes = readingMinutes(note.body ?? '');
+const toc = headings.filter((item) => item.depth === 2 || item.depth === 3);
+---
+
+<Base title={note.data.title} description={note.data.description}>
+  <main class="page-shell note-layout" id="content" data-pagefind-body>
+    <header class="note-header">
+      <p class="kicker">
+        <a href={`/topics/${topicSlug(topic)}/`}>{topic}</a>
+        · {formatFullDate(note.data.date)}
+        · {minutes} min
+      </p>
+      <h1>{note.data.title}</h1>
+      {note.data.description && <p>{note.data.description}</p>}
+    </header>
+
+    {
+      toc.length > 2 && (
+        <aside class="note-toc">
+          <p>On this page</p>
+          <ol>
+            {toc.map((item) => (
+              <li>
+                <a href={`#${item.slug}`}>{item.text}</a>
+              </li>
+            ))}
+          </ol>
+        </aside>
+      )
+    }
+
+    <article class="note-prose">
+      <Content />
+    </article>
+
+    <nav class="note-pager" aria-label="相邻笔记">
+      {
+        prev && (
+          <a href={notePath(prev)}>
+            <small>上一篇</small>
+            {prev.data.title}
+          </a>
+        )
+      }
+      {
+        next && (
+          <a href={notePath(next)}>
+            <small>下一篇</small>
+            {next.data.title}
+          </a>
+        )
+      }
+    </nav>
+  </main>
+</Base>

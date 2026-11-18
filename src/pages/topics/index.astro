@@ -1,0 +1,28 @@
+---
+import Base from '../../layouts/Base.astro';
+import { allNotes, topicOf, topicSlug } from '../../lib/notes';
+
+const notes = await allNotes();
+const topics = [...new Set(notes.map(topicOf))];
+---
+
+<Base title="Topics" description="按分类进入笔记。">
+  <main class="page-shell" id="content">
+    <header class="page-intro">
+      <p class="kicker">Knowledge index</p>
+      <h1>Topics</h1>
+      <p>先看分类建立结构，再用标题和搜索找关键词。</p>
+    </header>
+    <div class="stack">
+      {topics.map((topic) => {
+        const count = notes.filter((note) => topicOf(note) === topic).length;
+        return (
+          <a class="topic-card" href={`/topics/${topicSlug(topic)}/`}>
+            <span class="kicker">{count} notes</span>
+            <h2>{topic}</h2>
+          </a>
+        );
+      })}
+    </div>
+  </main>
+</Base>

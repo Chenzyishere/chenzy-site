@@ -1,0 +1,120 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import WorkCarousel from '../components/WorkCarousel';
+import { site } from '../data/site';
+import { now } from '../data/now';
+import { allNotes, formatDotDate, notePath, topicOf, topicSlug } from '../lib/notes';
+import '../styles/home.css';
+
+const notes = await allNotes();
+const featured = notes.filter((note) => note.data.featured).slice(0, 4);
+const recent = notes.filter((note) => !note.data.featured).slice(0, 6);
+const topics = [...new Set(notes.map(topicOf))];
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base theme="blue" description={site.description}>
+  <main class="home" id="content">
+    <section class="hero">
+      <p class="hero-kicker">{site.kicker}</p>
+      <h1>量化学习，<br />驱散认知迷雾。</h1>
+      <p class="hero-lead">{site.lead}</p>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Now</h2>
+      <p class="section-copy">在学的，和正在做的。先写下来，再让时间检验。</p>
+      <div class="now-grid">
+        <div class="now-col">
+          <h3>在学</h3>
+          <ul>
+            {now.learning.map((item) => (
+              <li>
+                <strong>{item.title}</strong>
+                <span>{item.detail}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="now-col">
+          <h3>在做</h3>
+          <ul>
+            {now.making.map((item) => (
+              <li>
+                <strong>{item.title}</strong>
+                <span>{item.detail}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Notes</h2>
+      <p class="section-copy">先读这四篇。每篇只保留一句判断，点进去看原文。</p>
+      <ol class="featured-list">
+        {featured.map((note, index) => (
+          <li>
+            <a class="featured-item" href={notePath(note)}>
+              <span class="featured-no">{String(index + 1).padStart(2, '0')}</span>
+              <span class="featured-date">{formatDotDate(note.data.date)}</span>
+              <h3>{note.data.title}</h3>
+              <p>{note.data.description}</p>
+              <em>读原文 →</em>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Work</h2>
+      <p class="section-copy">做过的东西。海报只放判断和入口，细节在仓库里。</p>
+      <WorkCarousel client:load items={projects.map((item) => item.data)} />
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Topics</h2>
+      <p class="section-copy">按第二级分类进笔记，不靠侧栏小部件。</p>
+      <div class="topics-grid">
+        {topics.map((topic) => (
+          <a class="topic-link" href={`/topics/${topicSlug(topic)}/`}>
+            <h3>{topic}</h3>
+            <p>{notes.filter((note) => topicOf(note) === topic).length} 篇</p>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Recent</h2>
+      <ul class="recent-list">
+        {recent.map((note) => (
+          <li>
+            <a href={notePath(note)}>
+              <span>{formatDotDate(note.data.date)}</span>
+              <span>{note.data.title}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <a class="more-link" href="/notes/">全部笔记 →</a>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Lists</h2>
+      <div class="lists-grid">
+        <a class="list-card" href="/list/">
+          <h3>Music / Film / Links</h3>
+          <p>常听的、看过的、值得放进来的站点。先占位置。</p>
+        </a>
+        <a class="list-card" href="/archive/">
+          <h3>Archive</h3>
+          <p>按时间把笔记摊开。</p>
+        </a>
+      </div>
+    </section>
+  </main>
+</Base>

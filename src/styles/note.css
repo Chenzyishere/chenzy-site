@@ -1,0 +1,156 @@
+.note-layout {
+  display: grid;
+  gap: 32px;
+  padding: 32px var(--gutter) 72px;
+}
+
+@media (min-width: 1100px) {
+  .note-layout {
+    grid-template-columns: minmax(0, var(--max-read)) 220px;
+    justify-content: center;
+    column-gap: 48px;
+  }
+
+  .note-toc {
+    position: sticky;
+    top: calc(var(--header) + 24px);
+    align-self: start;
+  }
+}
+
+.note-header {
+  grid-column: 1 / -1;
+  max-width: var(--max-read);
+}
+
+.note-header h1 {
+  margin: 8px 0 0;
+  font-family: var(--font-ui);
+  font-weight: 900;
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+}
+
+.note-header p {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 18px;
+}
+
+.note-prose {
+  max-width: var(--max-read);
+  font-family: var(--font-body);
+  font-size: 18px;
+  line-height: 1.8;
+  overflow-x: auto;
+}
+
+.note-prose :where(h2, h3, h4) {
+  font-family: var(--font-ui);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  margin: 2em 0 0.6em;
+}
+
+.note-prose h2 { font-size: 1.6em; }
+.note-prose h3 { font-size: 1.25em; }
+
+.note-prose :where(p, ul, ol, blockquote, table) {
+  margin: 0 0 1.1em;
+}
+
+.note-prose a {
+  color: var(--blue-deep);
+}
+
+.note-prose code {
+  font-family: ui-monospace, "Cascadia Code", monospace;
+  font-size: 0.88em;
+  background: color-mix(in srgb, var(--ink) 8%, var(--paper));
+  padding: 0.1em 0.35em;
+}
+
+.note-prose pre {
+  overflow: auto;
+  padding: 16px;
+  border: 2px solid var(--ink);
+  background: #141414;
+  color: #f4efe4;
+  margin: 0 0 1.4em;
+}
+
+.note-prose pre code {
+  background: none;
+  padding: 0;
+  color: inherit;
+}
+
+.note-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92em;
+  font-family: var(--font-ui);
+}
+
+.note-prose th,
+.note-prose td {
+  border: 1px solid var(--ink);
+  padding: 8px 10px;
+  vertical-align: top;
+}
+
+.note-prose blockquote {
+  margin-left: 0;
+  padding: 4px 0 4px 16px;
+  border-left: 3px solid var(--ink);
+}
+
+.note-toc {
+  font-size: 13px;
+}
+
+.note-toc p {
+  margin: 0 0 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.note-toc ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.note-toc a {
+  text-decoration: none;
+  color: var(--muted);
+}
+
+.note-toc a:hover {
+  color: var(--ink);
+}
+
+.note-pager {
+  grid-column: 1 / -1;
+  max-width: var(--max-read);
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+  border-top: 3px solid var(--ink);
+  padding-top: 24px;
+}
+
+.note-pager a {
+  text-decoration: none;
+}
+
+.note-pager small {
+  display: block;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}

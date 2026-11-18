@@ -1,0 +1,22 @@
+---
+import Base from '../../layouts/Base.astro';
+import { site } from '../../data/site';
+import '../../styles/note.css';
+---
+
+<Base title="About" description="关于 Chenzy 与这个站点。">
+  <main class="page-shell" id="content">
+    <header class="page-intro">
+      <p class="kicker">{site.kicker}</p>
+      <h1>About</h1>
+      <p>{site.lead}</p>
+    </header>
+    <article class="stack note-prose" style="padding-top: 32px; padding-bottom: 64px;">
+      <p>方向是前端开发与工程化。内容是学习笔记、项目沉淀、面试时真正被问到的问题。</p>
+      <p>这个站点不再套主题模板。首页讲我是谁、最近在做什么；笔记页只负责把一篇东西读完。</p>
+      <p>
+        代码在 <a href={site.github}>GitHub</a>。旧的 Hexo 链接会跳到对应笔记。
+      </p>
+    </article>
+  </main>
+</Base>

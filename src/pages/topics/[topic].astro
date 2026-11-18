@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import {
+  allNotes,
+  formatFullDate,
+  notePath,
+  topicNameFromSlug,
+  topicOf,
+  topicSlug,
+} from '../../lib/notes';
+
+export async function getStaticPaths() {
+  const notes = await allNotes();
+  const topics = [...new Set(notes.map(topicOf))];
+  return topics.map((topic) => ({
+    params: { topic: topicSlug(topic) },
+  }));
+}
+
+const notes = await allNotes();
+const topic = topicNameFromSlug(Astro.params.topic ?? '') ?? '未分类';
+const list = notes.filter((note) => topicOf(note) === topic);
+---
+
+<Base title={topic} description={`${topic} 相关笔记。`}>
+  <main class="page-shell" id="content">
+    <header class="page-intro">
+      <p class="kicker"><a href="/topics/">Topics</a> / {list.length} notes</p>
+      <h1>{topic}</h1>
+    </header>
+    <div class="stack">
+      {list.map((note) => (
+        <a class="note-row" href={notePath(note)}>
+          <span class="note-meta">{formatFullDate(note.data.date)}</span>
+          <h2 class="note-title">{note.data.title}</h2>
+          <p class="note-desc">{note.data.description}</p>
+        </a>
+      ))}
+    </div>
+  </main>
+</Base>

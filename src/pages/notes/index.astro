@@ -1,0 +1,39 @@
+---
+import Base from '../../layouts/Base.astro';
+import { allNotes, formatFullDate, notePath, topicOf } from '../../lib/notes';
+
+const notes = await allNotes();
+---
+
+<Base title="Notes" description="Chenzy 的前端笔记。">
+  <main class="page-shell" id="content">
+    <header class="page-intro">
+      <p class="kicker">{notes.length} notes</p>
+      <h1>Notes</h1>
+      <p>能被复述的判断。按标题筛，全文检索走搜索页。</p>
+      <input class="filter-input" type="search" data-filter placeholder="筛选标题" />
+    </header>
+    <div class="stack" data-list>
+      {notes.map((note) => (
+        <a class="note-row" href={notePath(note)} data-title={`${note.data.title} ${topicOf(note)}`}>
+          <span class="note-meta">{formatFullDate(note.data.date)} · {topicOf(note)}</span>
+          <h2 class="note-title">{note.data.title}</h2>
+          <p class="note-desc">{note.data.description}</p>
+        </a>
+      ))}
+    </div>
+  </main>
+</Base>
+
+<script>
+  const input = document.querySelector('[data-filter]');
+  const rows = [...document.querySelectorAll('[data-list] [data-title]')];
+  input?.addEventListener('input', () => {
+    const q = input instanceof HTMLInputElement ? input.value.trim().toLowerCase() : '';
+    rows.forEach((row) => {
+      if (!(row instanceof HTMLElement)) return;
+      const hay = (row.dataset.title ?? '').toLowerCase();
+      row.hidden = Boolean(q) && !hay.includes(q);
+    });
+  });
+</script>

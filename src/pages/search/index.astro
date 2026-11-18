@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base title="Search" description="搜索笔记。">
+  <main class="page-shell" id="content">
+    <header class="page-intro">
+      <p class="kicker">Find</p>
+      <h1>Search</h1>
+      <p>构建后的全文检索。本地开发若没有索引，请先跑一次 build。</p>
+    </header>
+    <div class="stack" style="padding-top: 24px; padding-bottom: 64px;">
+      <div id="search"></div>
+    </div>
+  </main>
+</Base>
+
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+<script is:inline src="/pagefind/pagefind-ui.js"></script>
+<script is:inline>
+  window.addEventListener('DOMContentLoaded', () => {
+    const mount = document.querySelector('#search');
+    if (!mount || typeof window.PagefindUI === 'undefined') return;
+    new window.PagefindUI({ element: '#search', showSubResults: true });
+  });
+</script>

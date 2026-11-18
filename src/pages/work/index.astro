@@ -1,0 +1,18 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import WorkCarousel from '../../components/WorkCarousel';
+import '../../styles/home.css';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Base title="Work" description="Chenzy 做过的项目。" theme="blue">
+  <main class="home page-shell" id="content">
+    <section class="section">
+      <h1 class="section-title">Work</h1>
+      <p class="section-copy">三件事。点进去是外链，这里只放判断。</p>
+      <WorkCarousel client:load items={projects.map((item) => item.data)} />
+    </section>
+  </main>
+</Base>
