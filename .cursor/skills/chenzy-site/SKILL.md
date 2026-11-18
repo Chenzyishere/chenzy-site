@@ -87,7 +87,7 @@ Node 22。依赖安装优先 `https://registry.npmmirror.com`。
 - 预览：`https://chenzyishere.github.io/chenzy-site/`
 - `astro.config.mjs` 现在是 `site: 'https://chenzyishere.github.io'`、`base: '/chenzy-site'`。站内链接走 `withBase()`（`src/lib/paths.ts`）
 - 自定义域 `blog.chenzymark.space` **还没切**。切之前不要写 `public/CNAME`，也不要停 Hexo 部署。切的时候把 `base` 改成 `/`，`site` 改成自定义域
-- 锁文件里不要再留 `lenis`，`npm ci` 会报 Invalid Version
+- 锁文件里不要再留 `lenis`，也不要留下缺 `version` 的 `@pagefind/*-arm64` 空条目，否则 `npm ci` 会报 Invalid Version
 
 首页 hero 右侧是拍立得人像（旧站头像），黑框海报卡。关于页左上角同一张。图在 `public/images/portrait.jpg`，路径写在 `site.portrait`。
 
